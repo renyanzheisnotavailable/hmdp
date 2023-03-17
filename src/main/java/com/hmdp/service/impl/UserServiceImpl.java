@@ -52,7 +52,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         String s = RandomUtil.randomString(6);
         //redis保存验证码
         stringRedisTemplate.opsForValue().set(LOGIN_CODE_KEY + phone, s);
-        stringRedisTemplate.expire(LOGIN_CODE_KEY, LOGIN_CODE_TTL, TimeUnit.MINUTES);
+        stringRedisTemplate.expire(LOGIN_CODE_KEY + phone, LOGIN_CODE_TTL, TimeUnit.MINUTES);
         log.debug("生成验证码成功："+s);
         return Result.ok();
     }
