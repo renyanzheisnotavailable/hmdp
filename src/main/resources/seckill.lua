@@ -28,3 +28,7 @@ end
 redis.call('incrby', stock, -1)
 --userid放入set集合
 redis.call('sadd', order, userId)
+--3.4 下单（保存用户） sadd orderKey userId
+redis.call('sadd', orderKey, userId)
+--3.5 发送到消息队列
+redis.call('xadd', 'stream.orders', '*', 'userId', userId, 'voucherId', voucherId, 'id', orderId)
